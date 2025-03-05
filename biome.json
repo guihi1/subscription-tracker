@@ -1,0 +1,112 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "all": false,
+      "complexity": {
+        "recommended": true,
+        "all": false
+      },
+      "correctness": {
+        "recommended": true,
+        "all": false
+      },
+      "nursery": {
+        "recommended": true,
+        "all": false
+      },
+      "performance": {
+        "recommended": true,
+        "all": false
+      },
+      "security": {
+        "recommended": true,
+        "all": false
+      },
+      "style": {
+        "recommended": true,
+        "all": false
+      },
+      "suspicious": {
+        "recommended": true,
+        "all": false
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "ignore": [],
+    "include": [],
+    "formatWithErrors": false,
+    "indentStyle": "tab",
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "lineEnding": "lf",
+    "attributePosition": "auto",
+    "useEditorconfig": false
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": false
+    },
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "all",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "enabled": true,
+      "indentStyle": "tab",
+      "indentWidth": 2,
+      "lineEnding": "lf",
+      "lineWidth": 80,
+      "bracketSameLine": false,
+      "bracketSpacing": true,
+      "attributePosition": "auto"
+    },
+    "jsxRuntime": "transparent",
+    "linter": {
+      "enabled": true
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": false,
+      "allowTrailingCommas": false
+    },
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "tab",
+      "indentWidth": 2,
+      "lineEnding": "lf",
+      "lineWidth": 80,
+      "trailingCommas": "none"
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+  "css": {
+    "parser": {
+      "cssModules": false
+    },
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "tab",
+      "indentWidth": 2,
+      "lineEnding": "lf",
+      "lineWidth": 80,
+      "quoteStyle": "double"
+    },
+    "linter": {
+      "enabled": false
+    }
+  },
+  "overrides": []
+}

@@ -55,6 +55,19 @@ const subscriptionSchema = new mongoose.Schema(
 				},
 				message: 'Renewal date must be after the start date',
 			},
+			default: function () {
+				const renewalPeriod = {
+					daily: 1,
+					weekly: 7,
+					monthly: 30,
+					yearly: 365,
+				};
+				const renewalDate = new Date(this.startDate);
+				renewalDate.setDate(
+					renewalDate.getDate() + renewalPeriod[this.frequency],
+				);
+				return renewalDate;
+			},
 		},
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -66,22 +79,9 @@ const subscriptionSchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-subscription.Schema.pre('save', function (next) {
-	if (!this.renewalDate) {
-		const renewalPeriod = {
-			daily: 1,
-			weekly: 7,
-			monthly: 30,
-			yearly: 365,
-		};
-		this.renewalDate = new Date(this.startDate);
-		this.renewalDate.setDate(
-			this.renewalDate.getDate() + renewalPeriod[this.frequency],
-		);
-
-		if (this.renewalDate < new Date()) {
-			this.status = 'expired';
-		}
+subscriptionSchema.pre('save', function (next) {
+	if (this.renewalDate < new Date()) {
+		this.status = 'expired';
 	}
 	next();
 });

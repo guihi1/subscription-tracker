@@ -4,13 +4,13 @@ import * as subscriptionController from '../controllers/subscription.controller.
 
 const subscriptionRouter = Router();
 
-subscriptionRouter.get('/', (req, res) => {
-	res.send({ title: 'GET subscriptions' });
-});
+subscriptionRouter.get('/', authorize, subscriptionController.getSubscriptions);
 
-subscriptionRouter.get('/:id', (req, res) => {
-	res.send({ title: 'GET subscription details' });
-});
+subscriptionRouter.get(
+	'/:id',
+	authorize,
+	subscriptionController.getSubscriptionDetails,
+);
 
 subscriptionRouter.post(
 	'/',

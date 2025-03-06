@@ -56,9 +56,40 @@ const createSubscription = async (req, res, next) => {
 	}
 };
 
+const cancelSubscription = async (req, res, next) => {
+	try {
+		const subscription = await Subscription.findById(req.params.id).populate(
+			'user',
+		);
+		if (subscription.user.id !== req.user.id) {
+			const error = new Error('You do not own this subscription');
+			error.status = 401;
+			throw error;
+		}
+
+		if (subscription.status === 'cancelled') {
+			const error = new Error('Subscription already cancelled');
+			error.status = 400;
+			throw error;
+		}
+
+		const updatedSubscription = await Subscription.findByIdAndUpdate(
+			req.params.id,
+			{ status: 'cancelled' },
+		);
+		res.status(200).json({
+			success: true,
+			message: 'Subscription cancelled',
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 export {
 	getSubscriptions,
 	getSubscriptionDetails,
 	getUserSubscriptions,
 	createSubscription,
+	cancelSubscription,
 };

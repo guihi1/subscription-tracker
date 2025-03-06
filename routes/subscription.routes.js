@@ -32,9 +32,11 @@ subscriptionRouter.get(
 	subscriptionController.getUserSubscriptions,
 );
 
-subscriptionRouter.put('/:id/cancel', (req, res) => {
-	res.send({ title: 'CANCEl subscription' });
-});
+subscriptionRouter.put(
+	'/:id/cancel',
+	authorize,
+	subscriptionController.cancelSubscription,
+);
 
 subscriptionRouter.get('/upcoming-renewals', (req, res) => {
 	res.send({ title: 'GET upcoming-renewals' });

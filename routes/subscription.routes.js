@@ -22,9 +22,11 @@ subscriptionRouter.put('/:id', (req, res) => {
 	res.send({ title: 'UPDATE subscription' });
 });
 
-subscriptionRouter.delete('/:id', (req, res) => {
-	res.send({ title: 'DELETE subscriptions' });
-});
+subscriptionRouter.delete(
+	'/:id',
+	authorize,
+	subscriptionController.deleteSubscription,
+);
 
 subscriptionRouter.get(
 	'/user/:id',

@@ -73,14 +73,31 @@ const cancelSubscription = async (req, res, next) => {
 			throw error;
 		}
 
-		const updatedSubscription = await Subscription.findByIdAndUpdate(
-			req.params.id,
-			{ status: 'cancelled' },
-		);
+		await Subscription.findByIdAndUpdate(req.params.id, {
+			status: 'cancelled',
+		});
 		res.status(200).json({
 			success: true,
 			message: 'Subscription cancelled',
 		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+const deleteSubscription = async (req, res, next) => {
+	try {
+		const subscription = await Subscription.findById(req.params.id).populate(
+			'user',
+		);
+		if (subscription.user.id !== req.user.id) {
+			const error = new Error('You do not own this subscription');
+			error.status = 401;
+			throw error;
+		}
+
+		await Subscription.findByIdAndDelete(req.params.id);
+		res.status(200).json({ success: true, message: 'Subscription deleted' });
 	} catch (error) {
 		next(error);
 	}
@@ -92,4 +109,5 @@ export {
 	getUserSubscriptions,
 	createSubscription,
 	cancelSubscription,
+	deleteSubscription,
 };

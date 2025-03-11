@@ -119,6 +119,32 @@ const deleteSubscription = async (req, res, next) => {
 	}
 };
 
+const updateSubscription = async (req, res, next) => {
+	try {
+		const subscription = await Subscription.findById(req.params.id).populate(
+			'user',
+		);
+		if (subscription.user.id !== req.user.id) {
+			const error = new Error('You do not own this subscription');
+			error.status = 401;
+			throw error;
+		}
+
+		const updatedSubscription = await Subscription.findByIdAndUpdate(
+			req.params.id,
+			req.body,
+			{
+				new: true,
+				runValidators: true,
+			},
+		);
+
+		res.status(200).json({ success: true, data: updatedSubscription });
+	} catch (error) {
+		next(error);
+	}
+};
+
 const getUpcomingRenewals = async (req, res, next) => {
 	try {
 		const thisMoment = dayjs();
@@ -140,4 +166,5 @@ export {
 	cancelSubscription,
 	deleteSubscription,
 	getUpcomingRenewals,
+	updateSubscription,
 };

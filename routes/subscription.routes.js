@@ -18,9 +18,11 @@ subscriptionRouter.post(
 	subscriptionController.createSubscription,
 );
 
-subscriptionRouter.put('/:id', (req, res) => {
-	res.send({ title: 'UPDATE subscription' });
-});
+subscriptionRouter.put(
+	'/:id',
+	authorize,
+	subscriptionController.updateSubscription,
+);
 
 subscriptionRouter.delete(
 	'/:id',

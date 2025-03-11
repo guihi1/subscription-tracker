@@ -1,6 +1,7 @@
 import workflowClient from '../config/upstash.js';
 import Subscription from '../models/subscription.model.js';
 import { SERVER_URL } from '../config/env.js';
+import daysjs from 'dayjs';
 
 const getSubscriptions = async (req, res, next) => {
 	try {
@@ -118,6 +119,19 @@ const deleteSubscription = async (req, res, next) => {
 	}
 };
 
+const getUpcomingRenewals = async (req, res, next) => {
+	try {
+		const thisMoment = dayjs();
+		const upcomingRenewals = await Subscription.find({
+			renewalDate: { $gte: thisMoment, $lte: thisMoment.add(7, 'days') },
+		}).sort();
+
+		res.status(200).json({ success: true, data: upcomingRenewals });
+	} catch (error) {
+		next(error);
+	}
+};
+
 export {
 	getSubscriptions,
 	getSubscriptionDetails,
@@ -125,4 +139,5 @@ export {
 	createSubscription,
 	cancelSubscription,
 	deleteSubscription,
+	getUpcomingRenewals,
 };

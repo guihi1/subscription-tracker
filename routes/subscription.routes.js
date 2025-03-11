@@ -40,8 +40,9 @@ subscriptionRouter.put(
 	subscriptionController.cancelSubscription,
 );
 
-subscriptionRouter.get('/upcoming-renewals', (req, res) => {
-	res.send({ title: 'GET upcoming-renewals' });
-});
+subscriptionRouter.get(
+	'/upcoming-renewals',
+	subscriptionController.getUpcomingRenewals,
+);
 
 export default subscriptionRouter;
